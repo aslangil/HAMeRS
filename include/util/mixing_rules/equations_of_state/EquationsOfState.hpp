@@ -3,13 +3,16 @@
 
 #include "util/mixing_rules/equations_of_state/ideal_gas/EquationOfStateIdealGas.hpp"
 #include "util/mixing_rules/equations_of_state/ideal_gas/EquationOfStateMixingRulesIdealGas.hpp"
+#include "util/mixing_rules/equations_of_state/Noble_Abel_stiffened_gas/EquationOfStateMixingRulesNobleAbelStiffenedGas.hpp"
+#include "util/mixing_rules/equations_of_state/Noble_Abel_stiffened_gas/EquationOfStateMixingRulesNobleAbelStiffenedGas.hpp"
 
 #include <map>
 #include <string>
 
 namespace EQN_STATE
 {
-    enum TYPE { IDEAL_GAS };
+    enum TYPE { IDEAL_GAS,
+                NOBLE_ABEL_STIFFENED_GAS };
 }
 
 /*
@@ -23,6 +26,7 @@ inline std::ostream& operator<<(std::ostream& os, const EQN_STATE::TYPE& value)
     {
 #define INSERT_ELEMENT(p) strings[p] = #p
         INSERT_ELEMENT(EQN_STATE::IDEAL_GAS);
+        INSERT_ELEMENT(EQN_STATE::NOBLE_ABEL_STIFFENED_GAS);
 #undef INSERT_ELEMENT
     }
     

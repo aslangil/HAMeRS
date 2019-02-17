@@ -22,6 +22,17 @@ EquationOfStateMixingRulesManager::EquationOfStateMixingRulesManager(
                 mixing_closure_model,
                 equation_of_state_mixing_rules_db));
     }
+    else if (equation_of_state_str == "NOBLE_ABEL_STIFFENED_GAS")
+    {
+        d_equation_of_state_type = EQN_STATE::NOBLE_ABEL_STIFFENED_GAS;
+        
+        d_equation_of_state_mixing_rules.reset(new EquationOfStateMixingRulesNobleAbelStiffenedGas(
+                "d_equation_of_state_mixing_rules",
+                dim,
+                num_species,
+                mixing_closure_model,
+                equation_of_state_mixing_rules_db));
+    }
     else
     {
         TBOX_ERROR(d_object_name
