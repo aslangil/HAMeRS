@@ -418,7 +418,7 @@ class EquationOfStateMixingRulesNobleAbelStiffenedGas: public EquationOfStateMix
         getNumberOfSpeciesThermodynamicProperties(const int species_index = 0) const
         {
             NULL_USE(species_index);
-            return 4;
+            return 7;
         }
         
         /*
@@ -431,227 +431,17 @@ class EquationOfStateMixingRulesNobleAbelStiffenedGas: public EquationOfStateMix
         
     private:
         /*
-         * Get the number of thermodynamic properties of the mixture.
-         */
-        int
-        getNumberOfMixtureThermodynamicProperties() const;
-        
-        /*
-         * Get the thermodynamic properties of the mixture.
-         */
-        void
-        getMixtureThermodynamicProperties(
-            std::vector<double*>& mixture_thermo_properties,
-            const std::vector<const double*>& species_fraction) const;
-        
-        /*
-         * Get the thermodynamic properties of the mixture.
-         */
-        void
-        computeMixtureThermodynamicProperties(
-            boost::shared_ptr<pdat::CellData<double> >& data_mixture_thermo_properties,
-            const boost::shared_ptr<pdat::CellData<double> >& data_species_fraction,
-            const hier::Box& domain) const;
-        
-        /*
-         * Get the thermodynamic properties of the mixture.
-         */
-        void
-        computeMixtureThermodynamicProperties(
-            boost::shared_ptr<pdat::SideData<double> >& data_mixture_thermo_properties,
-            const boost::shared_ptr<pdat::SideData<double> >& data_species_fraction,
-            int side_normal,
-            const hier::Box& domain) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with mass fractions.
-         */
-        void
-        getMixtureThermodynamicPropertiesWithMassFraction(
-            std::vector<double*>& mixture_thermo_properties,
-            const std::vector<const double*>& mass_fractions) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with mass fractions.
-         */
-        void
-        computeMixtureThermodynamicPropertiesWithMassFraction(
-            boost::shared_ptr<pdat::CellData<double> >& data_mixture_thermo_properties,
-            const boost::shared_ptr<pdat::CellData<double> >& data_mass_fractions,
-            const hier::Box& domain) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with mass fractions.
-         */
-        void
-        computeMixtureThermodynamicPropertiesWithMassFraction(
-            boost::shared_ptr<pdat::SideData<double> >& data_mixture_thermo_properties,
-            const boost::shared_ptr<pdat::SideData<double> >& data_mass_fractions,
-            int side_normal,
-            const hier::Box& domain) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with volume fractions.
-         */
-        void
-        getMixtureThermodynamicPropertiesWithVolumeFraction(
-            std::vector<double*>& mixture_thermo_properties,
-            const std::vector<const double*>& volume_fractions) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with volume fractions.
-         */
-        void
-        computeMixtureThermodynamicPropertiesWithVolumeFraction(
-            boost::shared_ptr<pdat::CellData<double> >& data_mixture_thermo_properties,
-            const boost::shared_ptr<pdat::CellData<double> >& data_volume_fractions,
-            const hier::Box& domain) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with volume fractions.
-         */
-        void
-        computeMixtureThermodynamicPropertiesWithVolumeFraction(
-            boost::shared_ptr<pdat::SideData<double> >& data_mixture_thermo_properties,
-            const boost::shared_ptr<pdat::SideData<double> >& data_volume_fractions,
-            int side_normal,
-            const hier::Box& domain) const;
-        
-        /*
-         * Compute the isochoric specific heat capacity of mixture with isothermal and isobaric
-         * equilibria assumptions.
-         */
-        void
-        computeIsochoricSpecificHeatCapacity(
-            double* const c_v,
-            const std::vector<const double*> Y,
-            const hier::IntVector& num_ghosts_isochoric_specific_heat_capacity,
-            const hier::IntVector& num_ghosts_mass_fractions,
-            const hier::IntVector& ghostcell_dims_isochoric_specific_heat_capacity,
-            const hier::IntVector& ghostcell_dims_mass_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
-         * Compute the isochoric specific heat capacity of mixture with isothermal and isobaric
-         * equilibria assumptions.
-         */
-        void
-        computeIsochoricSpecificHeatCapacity(
-            double* const c_v,
-            double* const Y_last,
-            const std::vector<const double*> Y,
-            const hier::IntVector& num_ghosts_isochoric_specific_heat_capacity,
-            const hier::IntVector& num_ghosts_mass_fractions,
-            const hier::IntVector& ghostcell_dims_isochoric_specific_heat_capacity,
-            const hier::IntVector& ghostcell_dims_mass_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
-         * Compute the isobaric specific heat capacity of mixture with isothermal and isobaric equilibria
-         * assumptions.
-         */
-        void
-        computeIsobaricSpecificHeatCapacity(
-            double* const c_p,
-            const std::vector<const double*> Y,
-            const hier::IntVector& num_ghosts_isobaric_specific_heat_capacity,
-            const hier::IntVector& num_ghosts_mass_fractions,
-            const hier::IntVector& ghostcell_dims_isobaric_specific_heat_capacity,
-            const hier::IntVector& ghostcell_dims_mass_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
-         * Compute the isobaric specific heat capacity of mixture with isothermal and isobaric equilibria
-         * assumptions.
-         */
-        void
-        computeIsobaricSpecificHeatCapacity(
-            double* const c_p,
-            double* const Y_last,
-            const std::vector<const double*> Y,
-            const hier::IntVector& num_ghosts_isobaric_specific_heat_capacity,
-            const hier::IntVector& num_ghosts_mass_fractions,
-            const hier::IntVector& ghostcell_dims_isobaric_specific_heat_capacity,
-            const hier::IntVector& ghostcell_dims_mass_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with mass fractions.
-         */
-        void
-        computeMixtureThermodynamicPropertiesWithMassFraction(
-            double* const gamma,
-            double* const R,
-            double* const c_p,
-            double* const c_v,
-            const std::vector<const double*> Y,
-            const hier::IntVector& num_ghosts_mixture_thermo_properties,
-            const hier::IntVector& num_ghosts_mass_fractions,
-            const hier::IntVector& ghostcell_dims_mixture_thermo_properties,
-            const hier::IntVector& ghostcell_dims_mass_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with mass fractions.
-         */
-        void
-        computeMixtureThermodynamicPropertiesWithMassFraction(
-            double* const gamma,
-            double* const R,
-            double* const c_p,
-            double* const c_v,
-            double* const Y_last,
-            const std::vector<const double*> Y,
-            const hier::IntVector& num_ghosts_mixture_thermo_properties,
-            const hier::IntVector& num_ghosts_mass_fractions,
-            const hier::IntVector& ghostcell_dims_mixture_thermo_properties,
-            const hier::IntVector& ghostcell_dims_mass_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with volume fractions.
-         */
-        void
-        getMixtureThermodynamicPropertiesWithVolumeFraction(
-            double* const gamma,
-            const std::vector<const double*> Z,
-            const hier::IntVector& num_ghosts_mixture_thermo_properties,
-            const hier::IntVector& num_ghosts_volume_fractions,
-            const hier::IntVector& ghostcell_dims_mixture_thermo_properties,
-            const hier::IntVector& ghostcell_dims_volume_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
-         * Compute the thermodynamic properties of the mixture with volume fractions.
-         */
-        void
-        getMixtureThermodynamicPropertiesWithVolumeFraction(
-            double* const gamma,
-            double* const Z_last,
-            const std::vector<const double*> Z,
-            const hier::IntVector& num_ghosts_mixture_thermo_properties,
-            const hier::IntVector& num_ghosts_volume_fractions,
-            const hier::IntVector& ghostcell_dims_mixture_thermo_properties,
-            const hier::IntVector& ghostcell_dims_volume_fractions,
-            const hier::IntVector& domain_lo,
-            const hier::IntVector& domain_dims) const;
-        
-        /*
          * Ratio of specific heats of different species.
          */
         std::vector<double> d_species_gamma;
         
         /*
-         * Gas constants of different species.
+         * Noble-Abel stiffened gas coefficients.
          */
-        std::vector<double> d_species_R;
+        std::vector<double> d_species_p_inf;
+        std::vector<double> d_species_q;
+        std::vector<double> d_species_q_prime;
+        std::vector<double> d_species_b;
         
         /*
          * Specific heats of different species.

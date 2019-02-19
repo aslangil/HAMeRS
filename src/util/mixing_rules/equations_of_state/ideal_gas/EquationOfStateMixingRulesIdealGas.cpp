@@ -2803,7 +2803,7 @@ EquationOfStateMixingRulesIdealGas::computeMixtureDensity(
 #ifdef HAMERS_DEBUG_CHECK_ASSERTIONS
     TBOX_ASSERT((d_mixing_closure_model == MIXING_CLOSURE_MODEL::ISOTHERMAL_AND_ISOBARIC) ||
                 (d_mixing_closure_model == MIXING_CLOSURE_MODEL::NO_MODEL && d_num_species == 1));
-
+    
     TBOX_ASSERT(data_mixture_density);
     TBOX_ASSERT(data_pressure);
     TBOX_ASSERT(data_temperature);
