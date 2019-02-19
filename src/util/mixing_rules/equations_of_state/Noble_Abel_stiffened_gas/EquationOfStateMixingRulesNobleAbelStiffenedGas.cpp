@@ -103,6 +103,45 @@ EquationOfStateMixingRulesNobleAbelStiffenedGas::EquationOfStateMixingRulesNoble
             << std::endl);
     }
     
+    if (equation_of_state_mixing_rules_db->keyExists("species_b"))
+    {
+        size_t species_b_array_size = equation_of_state_mixing_rules_db->getArraySize("species_b");
+        if (static_cast<int>(species_b_array_size) == d_num_species)
+        {
+            d_species_b = equation_of_state_mixing_rules_db->getDoubleVector("species_b");
+        }
+        else
+        {
+            TBOX_ERROR(d_object_name
+                << ": "
+                << "number of 'species_b' entries must be equal to 'num_species'."
+                << std::endl);
+        }
+    }
+    else if (equation_of_state_mixing_rules_db->keyExists("d_species_b"))
+    {
+        size_t species_b_array_size = equation_of_state_mixing_rules_db->getArraySize("d_species_b");
+        if (static_cast<int>(species_b_array_size) == d_num_species)
+        {
+            d_species_b = equation_of_state_mixing_rules_db->getDoubleVector("d_species_b");
+        }
+        else
+        {
+            TBOX_ERROR(d_object_name
+                << ": "
+                << "number of 'd_species_b' entries must be equal to 'd_num_species'."
+                << std::endl);
+        }
+    }
+    else
+    {
+        TBOX_ERROR(d_object_name
+            << ": "
+            << "Key data 'species_b'/'d_species_b'"
+            << "not found in data for Equation_of_state_mixing_rules."
+            << std::endl);
+    }
+    
     if (equation_of_state_mixing_rules_db->keyExists("species_q"))
     {
         size_t species_q_array_size = equation_of_state_mixing_rules_db->getArraySize("species_q");
@@ -177,45 +216,6 @@ EquationOfStateMixingRulesNobleAbelStiffenedGas::EquationOfStateMixingRulesNoble
         TBOX_ERROR(d_object_name
             << ": "
             << "Key data 'species_q_prime'/'d_species_q_prime'"
-            << "not found in data for Equation_of_state_mixing_rules."
-            << std::endl);
-    }
-    
-    if (equation_of_state_mixing_rules_db->keyExists("species_b"))
-    {
-        size_t species_b_array_size = equation_of_state_mixing_rules_db->getArraySize("species_b");
-        if (static_cast<int>(species_b_array_size) == d_num_species)
-        {
-            d_species_b = equation_of_state_mixing_rules_db->getDoubleVector("species_b");
-        }
-        else
-        {
-            TBOX_ERROR(d_object_name
-                << ": "
-                << "number of 'species_b' entries must be equal to 'num_species'."
-                << std::endl);
-        }
-    }
-    else if (equation_of_state_mixing_rules_db->keyExists("d_species_b"))
-    {
-        size_t species_b_array_size = equation_of_state_mixing_rules_db->getArraySize("d_species_b");
-        if (static_cast<int>(species_b_array_size) == d_num_species)
-        {
-            d_species_b = equation_of_state_mixing_rules_db->getDoubleVector("d_species_b");
-        }
-        else
-        {
-            TBOX_ERROR(d_object_name
-                << ": "
-                << "number of 'd_species_b' entries must be equal to 'd_num_species'."
-                << std::endl);
-        }
-    }
-    else
-    {
-        TBOX_ERROR(d_object_name
-            << ": "
-            << "Key data 'species_b'/'d_species_b'"
             << "not found in data for Equation_of_state_mixing_rules."
             << std::endl);
     }
@@ -365,6 +365,14 @@ EquationOfStateMixingRulesNobleAbelStiffenedGas::printClassData(
     os << d_species_p_inf[d_num_species - 1];
     os << std::endl;
     
+    os << "d_species_b = ";
+    for (int si = 0; si < d_num_species - 1; si++)
+    {
+        os << d_species_b[si] << ", ";
+    }
+    os << d_species_b[d_num_species - 1];
+    os << std::endl;
+    
     os << "d_species_q = ";
     for (int si = 0; si < d_num_species - 1; si++)
     {
@@ -379,14 +387,6 @@ EquationOfStateMixingRulesNobleAbelStiffenedGas::printClassData(
         os << d_species_q_prime[si] << ", ";
     }
     os << d_species_q_prime[d_num_species - 1];
-    os << std::endl;
-    
-    os << "d_species_b = ";
-    for (int si = 0; si < d_num_species - 1; si++)
-    {
-        os << d_species_b[si] << ", ";
-    }
-    os << d_species_b[d_num_species - 1];
     os << std::endl;
     
     /*
@@ -425,9 +425,9 @@ EquationOfStateMixingRulesNobleAbelStiffenedGas::putToRestart(
 {
     restart_db->putDoubleVector("d_species_gamma", d_species_gamma);
     restart_db->putDoubleVector("d_species_p_inf", d_species_p_inf);
+    restart_db->putDoubleVector("d_species_b", d_species_b);
     restart_db->putDoubleVector("d_species_q", d_species_q);
     restart_db->putDoubleVector("d_species_q_prime", d_species_q_prime);
-    restart_db->putDoubleVector("d_species_b", d_species_b);
     restart_db->putDoubleVector("d_species_c_v", d_species_c_v);
     restart_db->putDoubleVector("d_species_M", d_species_M);
 }

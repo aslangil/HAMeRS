@@ -439,9 +439,9 @@ class EquationOfStateMixingRulesNobleAbelStiffenedGas: public EquationOfStateMix
          * Noble-Abel stiffened gas coefficients.
          */
         std::vector<double> d_species_p_inf;
+        std::vector<double> d_species_b;
         std::vector<double> d_species_q;
         std::vector<double> d_species_q_prime;
-        std::vector<double> d_species_b;
         
         /*
          * Specific heats of different species.
